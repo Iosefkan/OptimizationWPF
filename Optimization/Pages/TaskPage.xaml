@@ -1,0 +1,387 @@
+﻿<Page x:Class="Optimization.Pages.TaskPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:materialDesignConverters="clr-namespace:MaterialDesignThemes.Wpf.Converters;assembly=MaterialDesignThemes.Wpf"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:local="clr-namespace:Optimization"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="TaskPage">
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.PopupBox.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.TextBlock.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+            <materialDesignConverters:BooleanToVisibilityConverter x:Key="InvertedBooleanToVisibilityConverter"
+                                                             FalseValue="Visible"
+                                                             TrueValue="Collapsed" />
+            <Grid x:Key="Task1">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <TextBox VerticalAlignment="Center" Margin="5,5" materialDesign:ValidationAssist.OnlyShowOnFocus="True" materialDesign:HintAssist.Hint="α, нормирующий множитель, [0,1]" Style="{StaticResource MaterialDesignOutlinedTextBox}">
+                    <TextBox.Text>
+                        <Binding Path="Firstvar.Alpha" Mode="TwoWay" ConverterCulture="ru-RU">
+                            <Binding.ValidationRules>
+                                <local:ValidateNorm/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+
+                <TextBox VerticalAlignment="Center" Margin="5,5" Grid.Row="1" materialDesign:ValidationAssist.OnlyShowOnFocus="True" materialDesign:HintAssist.Hint="β, нормирующий множитель, [0,1]" Style="{StaticResource MaterialDesignOutlinedTextBox}">
+                    <TextBox.Text>
+                        <Binding Path="Firstvar.Beta" Mode="TwoWay" ConverterCulture="ru-RU">
+                            <Binding.ValidationRules>
+                                <local:ValidateNorm/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+
+                <TextBox VerticalAlignment="Center" Margin="5,5" Grid.Row="2" materialDesign:ValidationAssist.OnlyShowOnFocus="True" materialDesign:HintAssist.Hint="µ, нормирующий множитель, [0,1]" Style="{StaticResource MaterialDesignOutlinedTextBox}">
+                    <TextBox.Text>
+                        <Binding Path="Firstvar.Mu" Mode="TwoWay" ConverterCulture="ru-RU">
+                            <Binding.ValidationRules>
+                                <local:ValidateNorm/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+
+                <TextBox VerticalAlignment="Center" Margin="5,5" Grid.Row="3" materialDesign:ValidationAssist.OnlyShowOnFocus="True" materialDesign:HintAssist.Hint="∆, нормирующий множитель, [0,1]" Style="{StaticResource MaterialDesignOutlinedTextBox}">
+                    <TextBox.Text>
+                        <Binding Path="Firstvar.Delta" Mode="TwoWay" ConverterCulture="ru-RU">
+                            <Binding.ValidationRules>
+                                <local:ValidateNorm/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+
+                <TextBox VerticalAlignment="Center" Margin="5,5" Grid.Row="4" Grid.Column="0" materialDesign:ValidationAssist.OnlyShowOnFocus="True" materialDesign:HintAssist.Hint="G, расход реакционной массы, кг/ч" Style="{StaticResource MaterialDesignOutlinedTextBox}">
+                    <TextBox.Text>
+                        <Binding Path="Firstvar.G" Mode="TwoWay" ConverterCulture="ru-RU">
+                            <Binding.ValidationRules>
+                                <local:ValidateMoreThanZero/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+
+                <TextBox VerticalAlignment="Center" Margin="5,5" Grid.Row="5" Grid.Column="0" materialDesign:ValidationAssist.OnlyShowOnFocus="True" materialDesign:HintAssist.Hint="A, давление в реакторе, Кпа" Style="{StaticResource MaterialDesignOutlinedTextBox}">
+                    <TextBox.Text>
+                        <Binding Path="Firstvar.A" Mode="TwoWay" ConverterCulture="ru-RU">
+                            <Binding.ValidationRules>
+                                <local:ValidateMoreThanZero/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+
+                <TextBox VerticalAlignment="Center" Margin="5,5" Grid.Row="6" Grid.Column="0" materialDesign:ValidationAssist.OnlyShowOnFocus="True" materialDesign:HintAssist.Hint="Себестоимость 1 кг целевого вещества S, у.е." Style="{StaticResource MaterialDesignOutlinedTextBox}">
+                    <TextBox.Text>
+                        <Binding Path="Firstvar.S" Mode="TwoWay" ConverterCulture="ru-RU">
+                            <Binding.ValidationRules>
+                                <local:ValidateMoreThanZero/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+
+                <Grid Grid.Column="1" Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox Margin="5,5" materialDesign:ValidationAssist.OnlyShowOnFocus="True" Grid.Column="0" VerticalAlignment="Center">
+                        <TextBox.Text>
+                            <Binding Path="Firstvar.T1From" Mode="TwoWay" ConverterCulture="ru-RU">
+                                <Binding.ValidationRules>
+                                    <local:ValidateTemperature/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+                    <TextBlock Text="&lt;= T1 &lt;=" VerticalAlignment="Center" Grid.Column="1" HorizontalAlignment="Center"/>
+                    <TextBox Margin="5,5" materialDesign:ValidationAssist.OnlyShowOnFocus="True" Grid.Column="2" VerticalAlignment="Center">
+                        <TextBox.Text>
+                            <Binding Path="Firstvar.T1To" Mode="TwoWay" ConverterCulture="ru-RU">
+                                <Binding.ValidationRules>
+                                    <local:ValidateTemperature/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+                </Grid>
+
+                <Grid Grid.Column="1" Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox Margin="5,5" materialDesign:ValidationAssist.OnlyShowOnFocus="True" Grid.Column="0" VerticalAlignment="Center">
+                        <TextBox.Text>
+                            <Binding Path="Firstvar.T2From" Mode="TwoWay" ConverterCulture="ru-RU">
+                                <Binding.ValidationRules>
+                                    <local:ValidateTemperature/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+                    <TextBlock Text="&lt;= T2 &lt;=" VerticalAlignment="Center" Grid.Column="1" HorizontalAlignment="Center"/>
+                    <TextBox Margin="5,5" materialDesign:ValidationAssist.OnlyShowOnFocus="True" Grid.Column="2" VerticalAlignment="Center">
+                        <TextBox.Text>
+                            <Binding Path="Firstvar.T2To" Mode="TwoWay" ConverterCulture="ru-RU">
+                                <Binding.ValidationRules>
+                                    <local:ValidateTemperature/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+                </Grid>
+                <Grid Grid.Column="1" Grid.Row="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="T2 - T1 &gt;=" VerticalAlignment="Center" Grid.Column="0" HorizontalAlignment="Center"/>
+                    <TextBox Margin="5,5" materialDesign:ValidationAssist.OnlyShowOnFocus="True" Grid.Column="1" VerticalAlignment="Center">
+                        <TextBox.Text>
+                            <Binding Path="Firstvar.TDiff" Mode="TwoWay" ConverterCulture="ru-RU">
+                                <Binding.ValidationRules>
+                                    <local:ValidateTemperature/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+                </Grid>
+            </Grid>
+
+            <Grid x:Key="Task2">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <TextBox VerticalAlignment="Center" Margin="5,5" materialDesign:ValidationAssist.OnlyShowOnFocus="True" materialDesign:HintAssist.Hint="α, нормирующий множитель, [0,1]" Style="{StaticResource MaterialDesignOutlinedTextBox}">
+                    <TextBox.Text>
+                        <Binding Path="Secondvar.Alpha" Mode="TwoWay" ConverterCulture="ru-RU">
+                            <Binding.ValidationRules>
+                                <local:ValidateNorm/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+
+                <TextBox VerticalAlignment="Center" Margin="5,5" Grid.Row="1" materialDesign:ValidationAssist.OnlyShowOnFocus="True" materialDesign:HintAssist.Hint="β, нормирующий множитель, [0,1]" Style="{StaticResource MaterialDesignOutlinedTextBox}">
+                    <TextBox.Text>
+                        <Binding Path="Secondvar.Beta" Mode="TwoWay" ConverterCulture="ru-RU">
+                            <Binding.ValidationRules>
+                                <local:ValidateNorm/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+
+                <TextBox VerticalAlignment="Center" Margin="5,5" Grid.Row="2" materialDesign:ValidationAssist.OnlyShowOnFocus="True" materialDesign:HintAssist.Hint="µ, нормирующий множитель, [0,1]" Style="{StaticResource MaterialDesignOutlinedTextBox}">
+                    <TextBox.Text>
+                        <Binding Path="Secondvar.Mu" Mode="TwoWay" ConverterCulture="ru-RU">
+                            <Binding.ValidationRules>
+                                <local:ValidateNorm/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+
+                <TextBox VerticalAlignment="Center" Margin="5,5" Grid.Row="3" Grid.Column="0" materialDesign:ValidationAssist.OnlyShowOnFocus="True" materialDesign:HintAssist.Hint="V, рабочий объем реактора, м^3" Style="{StaticResource MaterialDesignOutlinedTextBox}">
+                    <TextBox.Text>
+                        <Binding Path="Secondvar.V" Mode="TwoWay" ConverterCulture="ru-RU">
+                            <Binding.ValidationRules>
+                                <local:ValidateMoreThanZero/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+
+                <TextBox VerticalAlignment="Center" Margin="5,5" Grid.Row="4" Grid.Column="0" materialDesign:ValidationAssist.OnlyShowOnFocus="True" materialDesign:HintAssist.Hint="G, количество реакционной массы в реакторе, т" Style="{StaticResource MaterialDesignOutlinedTextBox}">
+                    <TextBox.Text>
+                        <Binding Path="Secondvar.G" Mode="TwoWay" ConverterCulture="ru-RU">
+                            <Binding.ValidationRules>
+                                <local:ValidateMoreThanZero/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+
+                <TextBox VerticalAlignment="Center" Margin="5,5" Grid.Row="5" Grid.Column="0" materialDesign:ValidationAssist.OnlyShowOnFocus="True" materialDesign:HintAssist.Hint="A, давление в реакторе, Кпа" Style="{StaticResource MaterialDesignOutlinedTextBox}">
+                    <TextBox.Text>
+                        <Binding Path="Secondvar.A" Mode="TwoWay" ConverterCulture="ru-RU">
+                            <Binding.ValidationRules>
+                                <local:ValidateMoreThanZero/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+
+                <TextBox VerticalAlignment="Center" Margin="5,5" Grid.Row="6" Grid.Column="0" materialDesign:ValidationAssist.OnlyShowOnFocus="True" materialDesign:HintAssist.Hint="Затраты на очистку реакционной массы от 1 кг побочного продукта С, у.е." Style="{StaticResource MaterialDesignOutlinedTextBox}">
+                    <TextBox.Text>
+                        <Binding Path="Secondvar.S" Mode="TwoWay" ConverterCulture="ru-RU">
+                            <Binding.ValidationRules>
+                                <local:ValidateMoreThanZero/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+
+                <Grid Grid.Column="1" Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox Margin="5,5" materialDesign:ValidationAssist.OnlyShowOnFocus="True" Grid.Column="0" VerticalAlignment="Center">
+                        <TextBox.Text>
+                            <Binding Path="Secondvar.T1From" Mode="TwoWay" ConverterCulture="ru-RU">
+                                <Binding.ValidationRules>
+                                    <local:ValidateTemperature/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+                    <TextBlock Text="&lt;= T1 &lt;=" VerticalAlignment="Center" Grid.Column="1" HorizontalAlignment="Center"/>
+                    <TextBox Margin="5,5" materialDesign:ValidationAssist.OnlyShowOnFocus="True" Grid.Column="2" VerticalAlignment="Center">
+                        <TextBox.Text>
+                            <Binding Path="Secondvar.T1To" Mode="TwoWay" ConverterCulture="ru-RU">
+                                <Binding.ValidationRules>
+                                    <local:ValidateTemperature/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+                </Grid>
+
+                <Grid Grid.Column="1" Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox Margin="5,5" materialDesign:ValidationAssist.OnlyShowOnFocus="True" Grid.Column="0" VerticalAlignment="Center">
+                        <TextBox.Text>
+                            <Binding Path="Secondvar.T2From" Mode="TwoWay" ConverterCulture="ru-RU">
+                                <Binding.ValidationRules>
+                                    <local:ValidateTemperature/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+                    <TextBlock Text="&lt;= T2 &lt;=" VerticalAlignment="Center" Grid.Column="1" HorizontalAlignment="Center"/>
+                    <TextBox Margin="5,5" materialDesign:ValidationAssist.OnlyShowOnFocus="True" Grid.Column="2" VerticalAlignment="Center">
+                        <TextBox.Text>
+                            <Binding Path="Secondvar.T2To" Mode="TwoWay" ConverterCulture="ru-RU">
+                                <Binding.ValidationRules>
+                                    <local:ValidateTemperature/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+                </Grid>
+
+                <Grid Grid.Column="1" Grid.Row="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="T2 - T1 &gt;=" VerticalAlignment="Center" Grid.Column="0" HorizontalAlignment="Center"/>
+                    <TextBox Margin="5,5" materialDesign:ValidationAssist.OnlyShowOnFocus="True" Grid.Column="1" VerticalAlignment="Center">
+                        <TextBox.Text>
+                            <Binding Path="Secondvar.TDiff" Mode="TwoWay" ConverterCulture="ru-RU" NotifyOnValidationError="True">
+                                <Binding.ValidationRules>
+                                    <local:ValidateTemperature/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+                </Grid>
+            </Grid>
+        </ResourceDictionary>
+    </Page.Resources>
+
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0*"/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <ComboBox Margin="10,5,-50,5" x:Name="TasksComboBox" Grid.Row="1" Grid.ColumnSpan="1" materialDesign:HintAssist.Hint="Выбор задачи оптимизации" SelectionChanged="TasksComboBox_SelectionChanged">
+            <ComboBoxItem>
+                <TextBlock>S = α*G*((T2-β*A)^N+µ*exp(T1+T2)^N+∆*(T2-T1))</TextBlock>
+            </ComboBoxItem>
+            <ComboBoxItem>
+                <TextBlock>C = α*(G*µ*((T2-T1)^V+(β*A-T1)^V))</TextBlock>
+            </ComboBoxItem>
+        </ComboBox>
+        <GroupBox Margin="10,10,-50,10" Header="Описание задачи" Grid.Column="0" Grid.Row="2"  Grid.ColumnSpan="1" Grid.RowSpan="7">
+            <TextBlock x:Name="TaskAbout" Text="Здесь будет опсание задачи" TextWrapping="Wrap" LineStackingStrategy="BlockLineHeight" LineHeight="30"/>
+        </GroupBox>
+        <GroupBox x:Name="TaskParam" Margin="60,10,10,10" Header="Параметры задачи" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="3" Grid.RowSpan="7">
+            <TextBlock Text="Здесь будут параметры задачи" TextWrapping="Wrap" LineStackingStrategy="BlockLineHeight" LineHeight="30"/>
+        </GroupBox>
+        <TextBlock Style="{StaticResource MaterialDesignBodyMediumTextBlock}" Foreground="Red" Grid.Column="0" Grid.Row="41" VerticalAlignment="Center" Grid.ColumnSpan="3" HorizontalAlignment="Center" Name="ErrorNotice">
+            Правильно заполните все поля параметров задачи
+        </TextBlock>
+        <Button Grid.Column="52" Grid.Row="42" HorizontalAlignment="Right" Margin="20,10" x:Name="ToMethodButton"
+              Style="{StaticResource MaterialDesignFloatingActionLightButton}"
+              ToolTip="srgsergegs"
+              Click="ToMethodButton_Click"
+             >
+            <materialDesign:PackIcon
+                Width="20"
+                Height="20"
+                Kind="ArrowRight"
+                />
+        </Button>
+    </Grid>
+</Page>
